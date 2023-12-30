@@ -53,35 +53,33 @@
 
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-5">
-		<form>
-			<label class="label">
-				<span>Username</span>
-				<input
-					class="input variant-form-material"
-					type="text"
-					name="username"
-					placeholder="Your Username"
-					bind:value={username}
-				/>
-			</label>
-			<label class="label">
-				<span>Password</span>
-				<input
-					class="input variant-form-material"
-					type="password"
-					name="password"
-					placeholder="Your Password"
-					bind:value={password}
-				/>
-			</label>
-			<div class="flex space-x-4 w-full justify-center items-center pt-4">
-				<button type="submit" class="btn variant-filled-primary w-full" on:click={() => login()}
-					>Log In</button
-				>
-				<a href="/signup"
-					><button type="button" class="btn variant-filled-secondary w-full">Sign Up</button></a
-				>
-			</div>
-		</form>
+		<label class="label">
+			<span>Username</span>
+			<input
+				class="input variant-form-material"
+				type="text"
+				name="username"
+				placeholder="Your Username"
+				bind:value={username}
+			/>
+		</label>
+		<label class="label">
+			<span>Password</span>
+			<input
+				class="input variant-form-material"
+				type="password"
+				name="password"
+				placeholder="Your Password"
+				bind:value={password}
+			/>
+		</label>
+		<div class="flex space-x-4 w-full justify-center items-center pt-4">
+			<button type="submit" class="btn variant-filled-primary w-full" on:click={() => login()}
+				>Log In</button
+			>
+			<a href="/signup"
+				><button type="button" class="btn variant-filled-secondary w-full">Sign Up</button></a
+			>
+		</div>
 	</div>
 </div>

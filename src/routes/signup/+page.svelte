@@ -52,56 +52,54 @@
 	}
 </script>
 
-<form>
-	<label class="label">
-		<span>Username *</span>
-		<input
-			class="input variant-form-material"
-			name="username"
-			type="text"
-			placeholder="username"
-			bind:value={username}
-		/>
-	</label>
-	<label class="label">
-		<span>First Name</span>
-		<input
-			class="input variant-form-material"
-			name="first_name"
-			type="text"
-			placeholder="Your First Name"
-			bind:value={first_name}
-		/>
-	</label>
-	<label class="label">
-		<span>Last Name</span>
-		<input
-			class="input variant-form-material"
-			name="last_name"
-			type="text"
-			placeholder="Your Last Name"
-			bind:value={last_name}
-		/>
-	</label>
-	<label class="label">
-		<span>Password</span>
-		<input
-			class="input variant-form-material"
-			name="password"
-			type="password"
-			placeholder="Your Password"
-			bind:value={password}
-		/>
-	</label>
-	<label class="label">
-		<span>Confirm Password</span>
-		<input
-			class="input variant-form-material"
-			name="password_confirm"
-			type="password"
-			placeholder="Your Password Again"
-			bind:value={password_confirm}
-		/>
-	</label>
-	<button type="submit" class="btn variant-filled" on:click={() => register()}>Sign Up</button>
-</form>
+<label class="label">
+	<span>Username *</span>
+	<input
+		class="input variant-form-material"
+		name="username"
+		type="text"
+		placeholder="username"
+		bind:value={username}
+	/>
+</label>
+<label class="label">
+	<span>First Name</span>
+	<input
+		class="input variant-form-material"
+		name="first_name"
+		type="text"
+		placeholder="Your First Name"
+		bind:value={first_name}
+	/>
+</label>
+<label class="label">
+	<span>Last Name</span>
+	<input
+		class="input variant-form-material"
+		name="last_name"
+		type="text"
+		placeholder="Your Last Name"
+		bind:value={last_name}
+	/>
+</label>
+<label class="label">
+	<span>Password</span>
+	<input
+		class="input variant-form-material"
+		name="password"
+		type="password"
+		placeholder="Your Password"
+		bind:value={password}
+	/>
+</label>
+<label class="label">
+	<span>Confirm Password</span>
+	<input
+		class="input variant-form-material"
+		name="password_confirm"
+		type="password"
+		placeholder="Your Password Again"
+		bind:value={password_confirm}
+	/>
+</label>
+<button type="submit" class="btn variant-filled" on:click={() => register()}>Sign Up</button>
