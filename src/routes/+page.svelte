@@ -1,33 +1,36 @@
 <script lang="ts">
-	const test = async () => {
-		var author = 1;
-		var accused = 2;
-		var color = 'red';
-		const body = JSON.stringify({ author, accused, color });
+	import CardList from '$lib/components/CardList.svelte';
+	import { callAPI } from '$lib/scripts/api';
+	import { ConicGradient } from '@skeletonlabs/skeleton';
+	import type { ConicStop } from '@skeletonlabs/skeleton';
 
-		const res = await fetch('http://localhost:3000/cards', {
-			body,
-			method: 'POST'
-		});
-		console.log(res);
+	const conicStops: ConicStop[] = [
+		{ color: 'transparent', start: 0, end: 25 },
+		{ color: 'rgb(var(--color-primary-500))', start: 75, end: 100 }
+	];
 
+	async function getRecentCards() {
+		const res = await callAPI('/cards/?page_id=1&page_size=10', 'GET', null);
 		if (res.ok) {
-			console.log('success');
+			let body = res.json();
+			return await body;
 		}
-	};
+	}
 </script>
 
-<div class="container h-full mx-auto flex justify-center items-center">
-	<div class="space-y-5">
-		<h1 class="h1">Let's get cracking bones!</h1>
-		<p>Start by exploring:</p>
-		<ul>
-			<li><code class="code">/src/routes/+layout.svelte</code> - barebones layout</li>
-			<li><code class="code">/src/app.postcss</code> - app wide css</li>
-			<li>
-				<code class="code">/src/routes/+page.svelte</code> - this page, you can replace the contents
-			</li>
-		</ul>
-		<button type="button" class="btn variant-filled" on:click={test}>Test</button>
+<div class="container h-full mx-auto grid-cols-1 grid- justify-center items-center px-4">
+	<div class="space-y-5 py-4">
+		{#await getRecentCards()}
+			<ConicGradient stops={conicStops} spin>Loading</ConicGradient>
+		{:then data}
+			<CardList {data} />
+		{:catch error}
+			<p>{error.message}</p>
+		{/await}
+	</div>
+	<div class="self-end w-full">
+		<a href="/report">
+			<button type="button" class="btn variant-filled-error w-full">Report</button>
+		</a>
 	</div>
 </div>

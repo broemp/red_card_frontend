@@ -2,10 +2,12 @@
 	import { Toast } from '@skeletonlabs/skeleton';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import '../app.postcss';
+	import { user } from '$lib/store';
 
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import {
+		popup,
 		storePopup,
 		AppShell,
 		AppBar,
@@ -14,6 +16,7 @@
 		getDrawerStore,
 		initializeStores
 	} from '@skeletonlabs/skeleton';
+	import type { PopupSettings } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
 	initializeStores();
@@ -23,15 +26,23 @@
 	function drawerOpen(): void {
 		drawerStore.open();
 	}
+
+	var initials = $user?.lastname?.charAt(0)! + $user?.lastname?.charAt(0)!;
+
+	const popupClick: PopupSettings = {
+		event: 'click',
+		target: 'popupClick',
+		placement: 'top'
+	};
 </script>
 
 <Drawer>
 	<Navigation />
 </Drawer>
 
-<AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10 ">
+<AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10">
 	<svelte:fragment slot="header">
-		<AppBar>
+		<AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
 			<svelte:fragment slot="lead">
 				<button class="md:hidden btn btn-sm mr-4" on:click={drawerOpen}>
 					<span>
@@ -42,22 +53,32 @@
 						</svg>
 					</span>
 				</button>
-				<strong class="text-xl uppercase"><span class="text-red-500">Red</span>Card</strong>
+				<a href="/">
+					<strong class="text-xl uppercase"><span class="text-red-500">Red</span>Card</strong>
+				</a>
 			</svelte:fragment>
+			<div class="max-md:hidden">Test</div>
+
 			<svelte:fragment slot="trail">
-				<Avatar initials="JD" background="bg-primary-500" width="w-12" />
+				{#if $user == null}
+					<a href="/login"
+						><button type="button" class="btn variant-filled-primary">Login</button></a
+					>
+				{:else}
+					<button use:popup={popupClick}>
+						<Avatar {initials} background="bg-primary-500" width="w-12" />
+					</button>
+				{/if}
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
-	<svelte:fragment slot="sidebarLeft">
-		<Navigation />
-	</svelte:fragment>
-	<!-- (pageHeader) -->
-	<!-- Router Slot -->
 	<slot />
-	<!-- ---- / ---- -->
-	<svelte:fragment slot="pageFooter">Page Footer</svelte:fragment>
-	<!-- (footer) -->
 </AppShell>
 
 <Toast />
+
+<!-- Popup -->
+<div class="card p-4 variant-filled-primary" data-popup="popupClick">
+	<a href="/logout">Logout</a>
+	<div class="arrow variant-filled-primary" />
+</div>

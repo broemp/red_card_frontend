@@ -1,29 +1,59 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
+	import { user } from '$lib/store';
+	import { callAPI, getAuthCookie } from '$lib/scripts/api';
 	import type { ToastSettings } from '@skeletonlabs/skeleton';
 	import { getToastStore } from '@skeletonlabs/skeleton';
-	import type { PageData, ActionData } from './$types';
-
 	const toastStore = getToastStore();
 
-	function triggerToast() {
+	if (getAuthCookie() && $user !== null) {
+		triggerToast('Already logged in!');
+		goto('/');
+	}
+
+	function triggerToast(message: string) {
 		const t: ToastSettings = {
-			message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit...'
+			message: message
 		};
 		toastStore.trigger(t);
 	}
 
-	export let formData: PageData;
-	export let form: ActionData;
+	let username: string = '';
+	let password: string = '';
 
-	if (form?.success) {
-		triggerToast();
+	async function login() {
+		if (username == '') {
+			triggerToast('Please Enter a Username!');
+			return;
+		}
+		if (password == '') {
+			triggerToast('Please Enter a Password!');
+			return;
+		}
+
+		const body = JSON.stringify({ username, password });
+		const res = await callAPI('/users/login', 'POST', body);
+
+		if (res.ok) {
+			const session = await res.json();
+			document.cookie = 'Authorization=Bearer ' + session.access_token + ";path='/';samesite=none;";
+			$user = {
+				id: session.user.id,
+				username: session.user.username,
+				firstname: session.user.first_name.String,
+				lastname: session.user.last_name.String
+			};
+			goto('/');
+		} else {
+			triggerToast('Wrong Password!');
+			return;
+		}
 	}
 </script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-5">
-		<form method="post" use:enhance action="?/login">
+		<form>
 			<label class="label">
 				<span>Username</span>
 				<input
@@ -31,6 +61,7 @@
 					type="text"
 					name="username"
 					placeholder="Your Username"
+					bind:value={username}
 				/>
 			</label>
 			<label class="label">
@@ -40,10 +71,17 @@
 					type="password"
 					name="password"
 					placeholder="Your Password"
+					bind:value={password}
 				/>
 			</label>
-
-			<button type="submit" class="btn variant-filled">Log In</button>
+			<div class="flex space-x-4 w-full justify-center items-center pt-4">
+				<button type="submit" class="btn variant-filled-primary w-full" on:click={() => login()}
+					>Log In</button
+				>
+				<a href="/signup"
+					><button type="button" class="btn variant-filled-secondary w-full">Sign Up</button></a
+				>
+			</div>
 		</form>
 	</div>
 </div>
