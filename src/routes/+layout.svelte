@@ -2,7 +2,7 @@
 	import { Toast } from '@skeletonlabs/skeleton';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import '../app.postcss';
-	import { user } from '$lib/store';
+	import { user, jwt } from '$lib/store';
 
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -60,7 +60,7 @@
 			<div class="max-md:hidden">Test</div>
 
 			<svelte:fragment slot="trail">
-				{#if $user == null}
+				{#if $jwt === null}
 					<a href="/login"
 						><button type="button" class="btn variant-filled-primary">Login</button></a
 					>

@@ -7,9 +7,9 @@
 
 	const table: TableSource = {
 		// A list of heading labels.
-		head: ['ID', 'Accused', 'By', 'Color'],
+		head: ['ID', 'By', 'Color'],
 		// The data visibly shown in your table body UI.
-		body: tableMapperValues(data, ['id', 'accused_username', 'author_username', 'color']),
+		body: tableMapperValues(data, ['id', 'author_username', 'color']),
 		meta: tableMapperValues(data, ['id'])
 	};
 

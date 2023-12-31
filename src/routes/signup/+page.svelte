@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { callAPI, getAuthCookie } from '$lib/scripts/api';
+	import { user, jwt } from '$lib/store';
+	import { PUBLIC_BACKEND_URL } from '$env/static/public';
 	import type { ToastSettings } from '@skeletonlabs/skeleton';
 	import { getToastStore } from '@skeletonlabs/skeleton';
 	const toastStore = getToastStore();
 
-	if (getAuthCookie()) {
+	if ($jwt !== null) {
 		triggerToast('Already logged in!');
 		goto('/');
 	}
@@ -38,16 +39,27 @@
 		}
 
 		const body = JSON.stringify({ username, password, first_name, last_name });
-		const res = await callAPI('/users/register', 'POST', body);
+		const res = await fetch(PUBLIC_BACKEND_URL + '/users/register', {
+			body,
+			method: 'POST',
+
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
 
 		if (res.ok) {
 			const session = await res.json();
-			document.cookie = 'Authorization=Bearer ' + session.access_token + ";path='/';samesite=none;";
-
-			return;
+			$jwt = session.access_token;
+			$user = {
+				id: session.user.id,
+				username: session.user.username,
+				firstname: session.user.first_name.String,
+				lastname: session.user.last_name.String
+			};
+			goto('/');
 		} else {
-			triggerToast('Wrong Password!');
-			return;
+			triggerToast('Username already taken!');
 		}
 	}
 </script>

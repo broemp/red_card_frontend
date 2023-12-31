@@ -1,12 +1,16 @@
-import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
+import { PUBLIC_BACKEND_URL } from '$env/static/public';
+import { jwt } from '$lib/store';
+import { get } from 'svelte/store';
 
-export const load: PageLoad = ({ params }) => {
-  // const res = await callAPI('/cards/?page_id=1&page_size=10', 'GET', null);
-  // if (res.ok) {
-  //   let body = res.json();
-  //   return await body;
-  // }
 
-  error(404, 'Not found');
+export const load: PageLoad = async ({ params, fetch }) => {
+
+  const res = await fetch(PUBLIC_BACKEND_URL + '/cards/' + params.id, {
+    method: "GET",
+  });
+
+  if (res.ok) {
+    return res.json()
+  }
 };
