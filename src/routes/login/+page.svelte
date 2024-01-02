@@ -47,8 +47,7 @@
 			$user = {
 				id: session.user.id,
 				username: session.user.username,
-				firstname: session.user.first_name.String,
-				lastname: session.user.last_name.String
+				name: session.user.name
 			};
 			goto('/');
 		} else {

@@ -1,5 +1,6 @@
 import type { PageLoad } from './$types';
 import { PUBLIC_BACKEND_URL } from '$env/static/public';
+import { redirect } from '@sveltejs/kit';
 
 
 export const load: PageLoad = async ({ params, fetch }) => {
@@ -7,6 +8,10 @@ export const load: PageLoad = async ({ params, fetch }) => {
   const user_res = await fetch(PUBLIC_BACKEND_URL + '/users/' + params.id, {
     method: "GET",
   });
+
+  if (!user_res.ok) {
+    return redirect(300, "/")
+  }
 
   const cards_res = await fetch(PUBLIC_BACKEND_URL + '/users/' + params.id + "/cards", {
     method: "GET",

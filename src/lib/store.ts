@@ -1,4 +1,4 @@
-import { writable, type Writable } from 'svelte/store';
+import type { Writable } from 'svelte/store';
 import { localStorageStore } from '@skeletonlabs/skeleton';
 import type { SessionUser } from '$lib/models';
 

@@ -21,11 +21,12 @@
 	};
 
 	let accused_filter = '';
-	let accused_id = '';
+	let accused_id: Number | undefined = undefined;
+	let description = '';
 	var userOptions: AutocompleteOption<string>[] = [];
 
 	function onUserSelection(event: CustomEvent<AutocompleteOption<string>>): void {
-		accused_id = event.detail.label;
+		accused_id = +event.detail.value;
 	}
 	getFilteredUsers();
 	async function getFilteredUsers() {
@@ -52,12 +53,13 @@
 	}
 
 	async function submit(color: string) {
-		if (accused_id === '') {
+		console.log(accused_id);
+		if (accused_id == undefined) {
 			triggerToast('Please select someone first!');
 			return;
 		}
 		const accused = accused_id;
-		const body = JSON.stringify({ accused, color });
+		const body = JSON.stringify({ accused, color, description });
 		console.log(body);
 		const res = await fetch(PUBLIC_BACKEND_URL + '/cards/', {
 			body,
@@ -70,11 +72,12 @@
 		});
 		if (res.ok) {
 			triggerToast('Success!');
+			accused_id = undefined;
 		}
 	}
 </script>
 
-<div class="justify-center mx-2 space-y-2">
+<div class="justify-center m-2 space-y-2">
 	<h1 class="text-xl flex justify-center">Who did it?</h1>
 	<input
 		class="input"
@@ -96,6 +99,17 @@
 				placeholder="Search..."
 			/>
 		</div>
+	</div>
+
+	<h1 class="text-xl flex justify-center">Description</h1>
+	<div class="justify-center mx-2 space-y-2">
+		<input
+			class="input"
+			type="text"
+			name="description"
+			bind:value={description}
+			placeholder="Optional Description..."
+		/>
 	</div>
 
 	<div class="flex flex-row space-x-2">

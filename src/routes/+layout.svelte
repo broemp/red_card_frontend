@@ -27,7 +27,7 @@
 		drawerStore.open();
 	}
 
-	var initials = $user?.lastname?.charAt(0)! + $user?.lastname?.charAt(0)!;
+	var initials = $user?.name?.charAt(0)!;
 
 	const popupClick: PopupSettings = {
 		event: 'click',
