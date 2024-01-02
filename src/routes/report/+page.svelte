@@ -61,7 +61,7 @@
 		const accused = accused_id;
 		const body = JSON.stringify({ accused, color, description });
 		console.log(body);
-		const res = await fetch(PUBLIC_BACKEND_URL + '/cards/', {
+		const res = await fetch(PUBLIC_BACKEND_URL + '/cards', {
 			body,
 			method: 'POST',
 
