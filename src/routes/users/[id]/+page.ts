@@ -7,6 +7,8 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
   const user_res = await fetch(PUBLIC_BACKEND_URL + '/users/' + params.id, {
     method: "GET",
+    mode: "no-cors"
+
   });
 
   if (!user_res.ok) {
@@ -15,6 +17,8 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
   const cards_res = await fetch(PUBLIC_BACKEND_URL + '/users/' + params.id + "/cards", {
     method: "GET",
+    mode: "no-cors"
+
   });
 
   var user;
