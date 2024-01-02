@@ -7,7 +7,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
   const res = await fetch(PUBLIC_BACKEND_URL + '/cards/' + params.id, {
     method: "GET",
-    mode: "no-cors"
+    mode: "cors"
   });
 
   if (!res.ok) {
