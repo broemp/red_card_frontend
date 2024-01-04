@@ -43,9 +43,9 @@
 		if (res.ok) {
 			var users = await res.json();
 			userOptions = [];
-			users.forEach((element: { username: string; id: string }) => {
+			users.forEach((element: { name: string; id: string }) => {
 				userOptions.push({
-					label: element.username,
+					label: element.name,
 					value: element.id
 				});
 			});

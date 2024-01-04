@@ -57,7 +57,9 @@
 					<strong class="text-xl uppercase"><span class="text-red-500">Red</span>Card</strong>
 				</a>
 			</svelte:fragment>
-			<div class="max-md:hidden">Test</div>
+			<div class="max-md:hidden">
+				<Navigation vertical="true" />
+			</div>
 
 			<svelte:fragment slot="trail">
 				{#if $jwt === null}

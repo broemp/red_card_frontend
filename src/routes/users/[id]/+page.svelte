@@ -21,10 +21,10 @@
 
 <div class="mx-2 mt-2 space-y-2">
 	<div class="card p-4">
-		<h1 class="text-xl">{data.user.username}</h1>
-		<p class="text-l">{data.user.name}</p>
+		<h1 class="text-xl">{data.user.name}</h1>
+		<p class="text-l">{data.user.username}</p>
 		{#if data.cards.count}
-			<div class="flex flex-row w-full justify-evenly pt-2">
+			<div class="flex flex-row w-full justify-evenly">
 				{#each data.cards.count as c}
 					<div class="flex card items-center {bgColor(c.color)}">
 						<p class="flex text-xl mx-2 my-1">
