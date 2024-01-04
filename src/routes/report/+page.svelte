@@ -31,7 +31,7 @@
 	getFilteredUsers();
 	async function getFilteredUsers() {
 		const res = await fetch(
-			PUBLIC_BACKEND_URL + '/users/?filter=' + accused_filter + '&page_id=1&page_size=5',
+			PUBLIC_BACKEND_URL + '/users?filter=' + accused_filter + '&page_id=1&page_size=5',
 			{
 				method: 'GET',
 
