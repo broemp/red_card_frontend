@@ -4,6 +4,14 @@
 	import '../app.postcss';
 	import { user, jwt } from '$lib/store';
 
+	// Vecel Statistic and Speed
+	import { dev } from '$app/environment';
+	import { inject } from '@vercel/analytics';
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+
+	injectSpeedInsights();
+	inject({ mode: dev ? 'development' : 'production' });
+
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import {
